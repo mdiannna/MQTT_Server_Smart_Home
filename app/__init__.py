@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_mqtt import Mqtt
 from flask_script import Manager 
-
+from flask_migrate import Migrate, MigrateCommand
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -13,9 +14,17 @@ app.config['MQTT_PASSWORD'] = ''  # set the password here if the broker demands 
 app.config['MQTT_KEEPALIVE'] = 5  # set the time interval for sending a ping to the broker to 5 seconds
 app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purposes
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////home/mdiannna/Code/MQTT_Server_Smart_Home/database.db"
+
+db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
 
 
 manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
 
 mqtt = Mqtt(app)
 
