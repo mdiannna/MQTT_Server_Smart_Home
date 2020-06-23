@@ -3,6 +3,8 @@ from flask_mqtt import Mqtt
 from flask_script import Manager 
 from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
+import json
+import requests
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -28,6 +30,7 @@ manager.add_command('db', MigrateCommand)
 
 mqtt = Mqtt(app)
 
+from app import sensor_data
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
@@ -41,7 +44,22 @@ def handle_mqtt_message(client, userdata, message):
         payload=message.payload.decode()
     )
     print("------MQTT RECEIVE----")
-    print(data)
+    # payload = json.loads(msg.payload) # you can use json.loads to convert string to json
+
+    # print(payload)
+    res = requests.post('http://localhost:5000/post-sensor-data', json=data)
+    print ('response from server:',res.text)
+    dictFromServer = res.json()
+
+    # # add_json_data(data["payload"])
+    # # payload = copy(data["payload"])
+    # # data_result = json.loads(str(payload))
+    # data_result = json.dumps(str(payload))
+    # print(data["payload"])
+
+    # print(data_result)
+    client.disconnect()
+
 
 
 # Bootstrap(app)
