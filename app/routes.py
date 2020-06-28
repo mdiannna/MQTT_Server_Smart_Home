@@ -52,3 +52,26 @@ def add_sensor():
         # sensor = Sensor(location='Room1Left', type="", inside=True)
     return render_template('add_sensor.html')
 
+
+
+@app.route('/health_state', methods=["GET", "POST"])
+def post_health_state():
+    if request.method=="POST":
+        input_json = request.get_json(force=True) 
+
+        # daca parametri in request:
+        # feeling = request.form.get("feeling")
+        # daca forlosim JSON:
+        # feeling trebuie sa fie 1, 2, 3 sau trebuie de convertit!!!!
+        feeling = input_json["feeling"]
+
+
+        userData = UserData(user_id=1, feeling=feeling)
+        db.session.add(userData)
+        db.session.commit()
+
+        dictToReturn = {'status': "received"}
+        return jsonify(dictToReturn)
+    else:
+        print("get!")
+    return "OK"
