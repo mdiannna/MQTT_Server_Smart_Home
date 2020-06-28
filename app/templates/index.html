@@ -1,10 +1,288 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-</head>
-<body>
-<h2>Smart home index :)</h2>
-</body>
-</html>
+{% extends 'dashboard_layout.html' %}
+
+
+
+<!--Temperature sensor-->
+
+{% block initialscripts %}
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['0', 'Temperature'],
+          ['0',  1000],
+          ['0',  1170],
+          ['0',  660],
+          ['0',  1030]
+        ]);
+        var options = {
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+    <!--Humidity sensor-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['0', 'Humidity'],
+          ['0',  1000],
+          ['0',  1170],
+          ['0',  660],
+          ['0',  1030]
+        ]);
+
+        var options = {
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_1'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+     <!--Gas sensor-->
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['0', 'Gas'],
+          ['0',  1000],
+          ['0',  1170],
+          ['0',  660],
+          ['0',  1030]
+        ]);
+
+        var options = {
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_2'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    {% endblock%}
+
+
+{% block content %}
+        <div class="row">
+          <div class="col-lg-9 main-chart">
+            <!--CUSTOM CHART START -->
+            <div class="border-head">
+              <h3>Sensors values</h3>
+            </div>
+           
+            <!--custom chart end-->
+          <!-- SERVER STATUS PANELS -->
+          <div class="row mt">
+            <!--TEMPERATURE CHART-->
+             <div class="col-md-4 col-sm-4 mb">
+              <div class="grey-panel pn donut-chart">
+                <div class="grey-header">
+                    <h5>TEMPERATURE CHART</h5>
+                  </div>
+                  <div id="curve_chart" height="120" width="120"></div>
+                </div>
+              </div>
+            <!--HUMIDITY CHART-->
+               <div class="col-md-4 col-sm-4 mb">
+              <div class="grey-panel pn donut-chart">
+                <div class="grey-header">
+                    <h5>HUMIDITY CHART</h5>
+                  </div>
+                  <div id="curve_chart_1" height="120" width="120"></div>
+                </div>
+              </div>
+            <!--GAS CHART-->
+               <div class="col-md-4 col-sm-4 mb">
+              <div class="grey-panel pn donut-chart">
+                <div class="grey-header">
+                    <h5>GAS CHART</h5>
+                  </div>
+                  <div id="curve_chart_2" height="120" width="120"></div>
+                </div>
+              </div>
+            </div>
+
+
+             <!-- CALENDAR-->
+            <div id="calendar" class="mb">
+              <div class="panel green-panel no-margin">
+                <div class="panel-body">
+                  <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
+                    <div class="arrow"></div>
+                    <h3 class="popover-title" style="disadding: none;"></h3>
+                    <div id="date-popover-content" class="popover-content"></div>
+                  </div>
+                  <div id="my-calendar"></div>
+                </div>
+              </div>
+            </div>
+            <!-- / calendar -->
+            <!-- /row -->
+          </div>
+          <!-- /col-lg-9 END SECTION MIDDLE -->
+              <!-- **********************************************************************************************************************************************************
+              RIGHT SIDEBAR CONTENT
+              *********************************************************************************************************************************************************** -->
+          <div class="col-lg-3 ds">
+            <h4 class="centered mt">Info BOX</h4>
+            <!-- First Info Box -->
+            <div class="desc">
+              <div class="thumb">
+                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+              </div>
+              <div class="details">
+                <p>
+                  <muted>Temperature VS Humidity</muted>
+                  <br/>
+                  <a href="http://www.dartmouth.edu/~cushman/courses/engs44/comfort.pdf">In Search of Indoor Comfort</a> 
+                </p>
+              </div>
+            </div>
+            <!-- Second Info Box -->
+            <div class="desc">
+              <div class="thumb">
+                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+              </div>
+              <div class="details">
+                <p>
+                  <muted>Comfort Zone</muted>
+                  <br/>
+                  <a href="https://www.azosensors.com/article.aspx?ArticleID=487">Determining Thermal Comfort Using a Humidity and Temperature Sensor </a>
+                </p>
+              </div>
+            </div>
+            <!-- Third Info Box-->
+            <div class="desc">
+              <div class="thumb">
+                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+              </div>
+              <div class="details">
+                <p>
+                  <muted>the gas concentration</muted>
+                  <br/>
+                  <a href="https://www.ahlborn.com/en_UK/gas-concentrations-in-the-air">Concentration of CO2 that are relevant to a human.</a>
+                </p>
+              </div>
+            </div>
+             <!-- /col-md-4 -->
+              <!--<div class="col-md-4 mb">-->
+                <!-- INSTAGRAM PANEL -->
+                <div class="instagram-panel pn">   
+                  <p>Stay healthy
+                  </p>
+            </div>
+            </div>
+
+           
+           
+          </div>
+          <!-- /col-lg-3 -->
+        </div>
+        <!-- /row -->
+    
+    {% endblock %}
+
+
+  {% block scripts %}
+
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="{{url_for('static', filename='lib/jquery/jquery.min.js')}}"></script>
+
+  <script src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{url_for('static', filename='lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <script src="{{url_for('static', filename='lib/jquery.sparkline.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='lib/gritter/js/jquery.gritter.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='lib/gritter-conf.js')}}"></script>
+  <!--script for this page-->
+  <script src="{{url_for('static', filename='lib/sparkline-chart.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/zabuto_calendar.js')}}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var unique_id = $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Welcome to On Fire!',
+        // (string | mandatory) the text inside the notification
+        text: 'Follow us',
+        // (string | optional) the image to display on the left
+        image: '{{url_for("static", filename="img/logo_transparent.png")}}',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: 8000,
+        // (string | optional) the class name you want to apply to that specific message
+        class_name: 'my-sticky-class'
+      });
+
+      return false;
+    });
+  </script>
+  <script type="application/javascript">
+    $(document).ready(function() {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function(e) {
+        $(this).hide();
+      });
+
+      $("#my-calendar").zabuto_calendar({
+        action: function() {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function() {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        },
+        legend: [{
+            type: "text",
+            label: "Special event",
+            badge: "00"
+          },
+          {
+            type: "block",
+            label: "Regular event",
+          }
+        ]
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+  </script>
+  {% endblock %}

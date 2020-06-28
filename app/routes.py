@@ -75,3 +75,10 @@ def post_health_state():
     else:
         print("get!")
     return "OK"
+
+
+
+@app.route('/health_page')
+def health_page():
+    
+    return render_template("health_page.html")
