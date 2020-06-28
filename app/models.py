@@ -24,7 +24,7 @@ class SensorData(db.Model):
 
     
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '{"sensor_id": %s, "type": %s, "value": %r, "timestamp": %s}' % (self.sensor_id, self.type, self.value, self.timestamp)
 
 class UserData(db.Model):
     id = db.Column(db.Integer, primary_key=True)

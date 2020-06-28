@@ -4,6 +4,8 @@ from app import mqtt
 from app.models import Sensor, SensorData
 from app import db 
 from app.sensor_data import add_json_data
+from sqlalchemy import desc
+
 
 @app.route('/')
 def hello():
@@ -82,3 +84,11 @@ def post_health_state():
 def health_page():
     
     return render_template("health_page.html")
+
+@app.route('/last-sensor-data')
+def get_last_sensor_data():
+
+    sensor_data = SensorData.query.order_by(desc(SensorData.timestamp)).limit(1).first()
+    print(sensor_data)
+    # print(sensor_data[0].value)
+    return str(sensor_data)
