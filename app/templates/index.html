@@ -1,6 +1,10 @@
 {% extends 'dashboard_layout.html' %}
 
-
+{% block metas%}
+<!-- <meta http-equiv="refresh" content="900">  Refresh every 15 minutes /900seconds -->
+<!-- <meta http-equiv="refresh" content="10">  Refresh every 10seconds -->
+<meta http-equiv="refresh" content="5"> <!-- Refresh every 5seconds-->
+{%endblock%}
 
 <!--Temperature sensor-->
 
@@ -13,16 +17,17 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['-', 'Temperature'],
-          ['°C',  20],
-          ['°C',  10],
-          ['°C',  20],
-          ['°C',  10],
-          ['°C', 30],
-          ['°C', 50],
-          ['°C', 45]
-        ]);
+        var data = google.visualization.arrayToDataTable({{temperature_data|tojson}});
+        // var data = google.visualization.arrayToDataTable([
+        //   ['-', 'Temperature'],
+        //   ['°C',  20],
+        //   ['°C',  10],
+        //   ['°C',  20],
+        //   ['°C',  10],
+        //   ['°C', 30],
+        //   ['°C', 50],
+        //   ['°C', 45]
+        // ]);
         var options = {
           curveType: 'function',
           legend: { position: 'bottom' }
@@ -79,14 +84,15 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['', 'Gas'],
-          ['',  60],
-          ['',  40],
-          ['',  40],
-          ['',  60],
-          ['', 80]
-        ]);
+        var data = google.visualization.arrayToDataTable({{gas_data|tojson}});
+        // var data = google.visualization.arrayToDataTable([
+        //   ['', 'Gas'],
+        //   ['',  60],
+        //   ['',  40],
+        //   ['',  40],
+        //   ['',  60],
+        //   ['', 80]
+        // ]);
 
         var options = {
           curveType: 'function',

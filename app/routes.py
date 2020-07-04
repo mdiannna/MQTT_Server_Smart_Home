@@ -5,18 +5,49 @@ from app.models import Sensor, SensorData
 from app import db 
 from app.sensor_data import add_json_data, aggregate_sensor_data
 from sqlalchemy import desc
+import random
 
+def transform_to_chart_data(data, type):
+    unit = '-'
+    if type == 'humidity':
+        new_data = [['-',  "Humidity"]]
+        unit = '%'
+    elif type == 'temperature':
+        new_data = [['-',  "temperature"]]
+        unit = '°C'
+    elif type == 'gas':
+        new_data = [['-',  "Gas"]]
+        unit = '-'
+    else:
+        new_data = ['-', '-']
+
+    for item in data:
+        new_data.append([unit, item.value])
+
+    return new_data
 
 @app.route('/')
 def hello():
     # mqtt.publish('home/testtopic', 'hello world')
-    message = '{"v": 10.2, "t": "h",  "id": "sensor1", "ts": "04-03-12 12:00"}'
+
+    value = random.choice([10, 20, 30, 49,23, 34, 12, 5])
+    stype = random.choice(['h', 't', 'g'])
+
+    message = '{"v": ' +str( value) + ', "t": "' + stype + '",  "id": "sensor1", "ts": "04-03-12 12:00"}'
     mqtt.publish('home/testtopic', message)
 
-    data = SensorData.query.limit(20).all()
+    data = SensorData.query.order_by(desc(SensorData.timestamp)).limit(20).all()
+    
+    data_humidity = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='h').limit(20).all()
+    data_temperature = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='t').limit(20).all()
+    data_gas = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='g').limit(20).all()
 
-    humidity_data = [['-',  "Humidity"], ['%',  20] , ['%',  40], ['%',  50], ['%',  20], ['%',  80] ]
-    return render_template("index.html", data=data, humidity_data=humidity_data)
+    data_humidity = transform_to_chart_data(data_humidity, "humidity")
+    data_temperature = transform_to_chart_data(data_temperature, "temperature")
+    data_gas = transform_to_chart_data(data_gas, "gas")
+
+    # humidity_data = [['-',  "Humidity"], ['%',  20] , ['%',  40], ['%',  50], ['%',  20], ['%',  80] ]
+    return render_template("index.html", data=data, humidity_data=data_humidity, temperature_data=data_temperature, gas_data=data_gas)
 
 
 @app.route('/post-sensor-data', methods=["GET", "POST"])
