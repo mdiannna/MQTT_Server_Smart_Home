@@ -13,7 +13,9 @@ def hello():
     message = '{"v": 10.2, "t": "h",  "id": "sensor1", "ts": "04-03-12 12:00"}'
     mqtt.publish('home/testtopic', message)
 
-    return render_template("index.html")
+    data = SensorData.query.limit(20).all()
+
+    return render_template("index.html", data=data)
 
 
 @app.route('/post-sensor-data', methods=["GET", "POST"])
