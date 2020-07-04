@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<div class="container">
-		<h2>Add sensor</h2>
-		<form class="form"  method="post">
-			<label for="type">Type</label>
-			<input type="text" name="type">
+{% extends 'dashboard_layout.html' %}
 
-			<label for="location">Location</label>
-			<input type="text" name="location">
+{% block content %}
 
-			<div>
-			<input type="radio" id="inside" name="inside" value="inside">
-  			<label for="male">Inside</label><br>
+        <h3><i class="fa fa-angle-right"></i> Add sensor</h3>
+        <div class="row mt">
+          <div class="form-panel">
+              <form role="form" class="form-horizontal style-form" method="post">
+                <div class="form-group has-success">
+                  <h4 class="mb"><label class="col-lg-2 control-label">Type</label></h4>
+                  <div class="col-lg-10">
+                    <input type="text" placeholder="" id="type" class="form-control" name="type">       
+                  </div>
+                </div>
+                <div class="form-group has-success">
+                  <h4 class="mb"><label class="col-lg-2 control-label">Location</label></h4>
+                  <div class="col-lg-10">
+                    <input type="text" placeholder="" id="type" class="form-control" name="location">       
+                  </div>
+                </div>
+              
+              <div>
+                <input type="radio" id="inside" name="inside" value="inside">
+                <label for="inside">Inside</label><br>
 
-  			<input type="radio" id="outside" name="inside" value="outside">
-  			<label for="male">Outside</label><br>
-</div>
-  			<button type="submit">Save</button>
-		</form>
-	</div>
-
-</body>
-</html>
+                <input type="radio" id="outside" name="inside" value="outside">
+                <label for="inside">Outside</label><br>
+              </div>
+                <div class="form-group">
+                  <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-theme" type="submit">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- /form-panel -->
+          </div>
+          <!-- /col-lg-12 -->
+        </div>
+        </div>
+     
+  {% endblock %}

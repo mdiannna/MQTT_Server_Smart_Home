@@ -1,9 +1,9 @@
 from app import app
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for, jsonify, make_response
 from app import mqtt
 from app.models import Sensor, SensorData
 from app import db 
-from app.sensor_data import add_json_data
+from app.sensor_data import add_json_data, aggregate_sensor_data
 from sqlalchemy import desc
 
 
@@ -45,15 +45,34 @@ def add_sensor():
         print(inside)
 
         if (s_type != "") and (inside != None) and (location != ""):
-            inside =   True if "inside" else False
-            sensor = Sensor(id=1, location=location, type=s_type, inside=inside)
+            inside =   True if inside=="inside" else False
+            sensor = Sensor(location=location, type=s_type, inside=inside)
             db.session.add(sensor)
             db.session.commit()
-        
+        return redirect('/manage-sensors')
         # TODO:
         # sensor = Sensor(location='Room1Left', type="", inside=True)
     return render_template('add_sensor.html')
 
+@app.route('/delete-sensor', methods=['DELETE', 'POST'])
+def delete_sensor():
+
+
+    sensor = Sensor.query.get(request.form['sensor_id'])
+    db.session.delete(sensor)
+    db.session.commit()
+    # flash('Entry deleted')
+    # res = make_response(jsonify({}), 204)
+    # return res
+    return redirect('manage-sensors')
+
+
+
+
+@app.route('/manage-sensors')
+def manage_sensors():
+    sensors = Sensor.query.all()
+    return render_template("manage_sensors.html", data=sensors)
 
 
 @app.route('/health_state', methods=["GET", "POST"])
@@ -85,6 +104,7 @@ def health_page():
     
     return render_template("health_page.html")
 
+
 @app.route('/last-sensor-data')
 def get_last_sensor_data():
 
@@ -92,3 +112,14 @@ def get_last_sensor_data():
     print(sensor_data)
     # print(sensor_data[0].value)
     return str(sensor_data)
+
+
+
+@app.route('/last-sensors-data-aggregated')
+def get_last_sensors_data_aggregated():
+
+    sensor_data = SensorData.query.order_by(desc(SensorData.timestamp)).limit(3).all()
+    print(sensor_data)
+    # print(sensor_data[0].value)
+    sensors_data_aggregated = aggregate_sensor_data(sensor_data)
+    return sensors_data_aggregated

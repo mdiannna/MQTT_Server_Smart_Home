@@ -1,0 +1,43 @@
+{% extends 'dashboard_layout.html' %}
+
+{% block content %}
+
+        <h3><i class="fa fa-cogs"></i> Manage sensors</h3>
+        <div class="row mt">
+          <div class="form-panel">
+            <table class="table">
+                <thead>
+                  <th>id</th>
+                  <th>location</th>
+                  <th>type</th>
+                  <th>inside/outside</th>
+                </thead>
+                 {% for sensor in data %}
+                <tr>
+                  <td>{{sensor.id}}</td>
+                  <td>{{sensor.location}}</td>
+                  <td>{{sensor.type}}</td>
+                  {% if sensor.inside == True%}
+                    <td>Inside</td>
+                  {% else %}
+                    <td>Outside</td>
+                  {% endif %}
+                  <td>
+<form action="{{ url_for('delete_sensor') }}" method=post>
+          <input type="hidden" name="sensor_id" value="{{ sensor.id }}">
+          <input type="submit" value="Delete" class="btn btn-primary" />
+</form>
+                  </td>
+
+                </tr>
+                  {% endfor %}
+
+            </table>              
+
+            <a href="/add-sensor" class="btn btn-primary"><i class="fa fa-plus"></i>Add Sensor</a>
+
+          </div>
+          <!-- /form-panel -->
+        </div>
+         
+  {% endblock %}

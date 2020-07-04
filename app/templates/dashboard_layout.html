@@ -153,6 +153,19 @@
               </a>
           </li>
           <!-- <li class="sub-menu">
+            <a href="/add-sensor">
+              <i class="fa fa-plus"></i>
+              <span>Add sensor</span>
+              </a>
+          </li> -->
+          <li class="sub-menu">
+            <a  href="/manage-sensors">
+              <i class="fa fa-cogs"></i>
+              <span>Manage sensors</span>
+              </a>
+          </li>
+
+          <!-- <li class="sub-menu">
             <a href="javascript:;">
               <i class=" fa fa-bar-chart-o"></i>
               <span>Charts</span>
@@ -223,6 +236,11 @@
     </footer>
     <!--footer end-->
   </section>
+
+  <script src="{{url_for('static', filename='lib/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/jquery-ui-1.9.2.custom.min.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/jquery.ui.touch-punch.min.js')}}"></script>
+
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="{{url_for('static', filename='lib/fancybox/jquery.fancybox.js')}}"></script>
   <script src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -232,6 +250,7 @@
   <!--common script for all pages-->
   <script src="{{url_for('static', filename='lib/common-scripts.js')}}"></script>
   
+
     <!--script for this page-->
   <script type="text/javascript">
     $(function() {
