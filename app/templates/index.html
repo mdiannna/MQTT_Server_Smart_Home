@@ -205,6 +205,16 @@
               *********************************************************************************************************************************************************** -->
           <div class="col-lg-3 ds">
             <h4 class="centered mt">Info BOX</h4>
+            <h2 class="text-center">Health predicted: </h2>
+
+            {% if health_predicted==3%}
+            <h2 class="health-predicted text-center">good</h2>
+            {% elif health_predicted==2%}
+            <h2 class="health-predicted text-center">medium</h2>
+            {% else %}
+            <h2 class="health-predicted text-center">bad</h2>
+            {% endif%}
+          
             <!-- First Info Box -->
             <div class="desc">
               <div class="thumb">

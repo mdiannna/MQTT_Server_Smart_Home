@@ -6,6 +6,7 @@ from app import db
 from app.sensor_data import add_json_data, aggregate_sensor_data
 from sqlalchemy import desc
 import random
+from app.ml_predict import predict_health
 
 def transform_to_chart_data(data, type):
     unit = '-'
@@ -41,13 +42,16 @@ def hello():
     data_humidity = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='h').limit(20).all()
     data_temperature = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='t').limit(20).all()
     data_gas = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='g').limit(20).all()
+    
+    health_predicted = int(predict_health((data_temperature[-1]).value, (data_humidity[-1]).value)[0])
 
     data_humidity = transform_to_chart_data(data_humidity, "humidity")
     data_temperature = transform_to_chart_data(data_temperature, "temperature")
     data_gas = transform_to_chart_data(data_gas, "gas")
 
+    
     # humidity_data = [['-',  "Humidity"], ['%',  20] , ['%',  40], ['%',  50], ['%',  20], ['%',  80] ]
-    return render_template("index.html", data=data, humidity_data=data_humidity, temperature_data=data_temperature, gas_data=data_gas)
+    return render_template("index.html", data=data, humidity_data=data_humidity, temperature_data=data_temperature, gas_data=data_gas, health_predicted=health_predicted)
 
 
 @app.route('/post-sensor-data', methods=["GET", "POST"])
