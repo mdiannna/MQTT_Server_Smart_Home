@@ -125,3 +125,14 @@ def get_last_sensors_data_aggregated():
     # print(sensor_data[0].value)
     sensors_data_aggregated = aggregate_sensor_data(sensor_data)
     return sensors_data_aggregated
+
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
+
+@app.route('/team')
+def team():
+    return render_template("team.html")

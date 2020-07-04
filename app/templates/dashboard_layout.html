@@ -149,7 +149,7 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="{{url_for('static', filename='img/logo_transparent.png')}}" class="img-circle" width="150"></a></p>
+          <p class="centered"><a href="/team"><img src="{{url_for('static', filename='img/logo_transparent.png')}}" class="img-circle" width="150"></a></p>
           <h5 class="centered">On Fire</h5>
           <li class="mt">
             <a class="active" href="/">
@@ -199,16 +199,41 @@
               <li><a href="/health_page">Motivational quotes</a></li>
             </ul>
           </li>
-          <li class="sub-menu">
+         <!--  <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-book"></i>
               <span>Extra pages</span>
               </a>
             <ul class="sub">
-              <li><a href="about.html">About</a></li>
-              <li><a href="profile.html">Team</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/team">Team</a></li>
             </ul>
-          </li>
+          </li> -->
+
+           <li class="sub-menu">
+            <a  href="/about">
+              <i class="fa fa-question"></i>
+              <span>About</span>
+              </a>
+            </li>
+            <li class="sub-menu">
+            <a  href="/team">
+              <i class="fa fa-users"></i>
+              <span>Team</span>
+              </a>
+            </li>
+
+<!-- 
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Extra pages</span>
+              </a>
+            <ul class="sub">
+              <li><a href="/about">About</a></li>
+              <li><a href="/team">Team</a></li>
+            </ul>
+          </li> -->
+
           
         <!-- sidebar menu end-->
       </div>
