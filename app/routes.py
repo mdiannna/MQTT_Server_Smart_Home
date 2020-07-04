@@ -15,7 +15,8 @@ def hello():
 
     data = SensorData.query.limit(20).all()
 
-    return render_template("index.html", data=data)
+    humidity_data = [['-',  "Humidity"], ['%',  20] , ['%',  40], ['%',  50], ['%',  20], ['%',  80] ]
+    return render_template("index.html", data=data, humidity_data=humidity_data)
 
 
 @app.route('/post-sensor-data', methods=["GET", "POST"])

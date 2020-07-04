@@ -42,15 +42,24 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['-', 'Humidity'],
-          ['%',  20],
-          ['%',  10],
-          ['%',  20],
-          ['%',  50],
-          ['%', 70],
-          ['%', 80]
-        ]);
+
+        // var data = new google.visualization.DataTable();
+        // data.addColumn('date','date-time');
+        // data.addColumn('number', 'chiller_load');
+        // data.addRows({{ humidity_data }});
+       
+
+        var data = google.visualization.arrayToDataTable({{humidity_data|tojson}});
+        
+        // var data = google.visualization.arrayToDataTable([
+        //   ['-', 'Humidity'],
+        //   ['%',  20],
+        //   ['%',  10],
+        //   ['%',  20],
+        //   ['%',  50],
+        //   ['%', 70],
+        //   ['%', 80]
+        // ]);
 
         var options = {
           curveType: 'function',
