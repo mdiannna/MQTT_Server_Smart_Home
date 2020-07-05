@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, request, redirect, url_for, jsonify, make_response
 from app import mqtt
-from app.models import Sensor, SensorData
+from app.models import Sensor, SensorData, UserData
 from app import db 
 from app.sensor_data import add_json_data, aggregate_sensor_data
 from sqlalchemy import desc
@@ -43,7 +43,10 @@ def hello():
     data_temperature = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='t').limit(20).all()
     data_gas = SensorData.query.order_by(desc(SensorData.timestamp)).filter_by(type='g').limit(20).all()
     
-    health_predicted = int(predict_health((data_temperature[-1]).value, (data_humidity[-1]).value)[0])
+    if len(data_temperature) > 0:    
+        health_predicted = int(predict_health((data_temperature[-1]).value, (data_humidity[-1]).value)[0])
+    else:
+        health_predicted = ""
 
     data_humidity = transform_to_chart_data(data_humidity, "humidity")
     data_temperature = transform_to_chart_data(data_temperature, "temperature")
