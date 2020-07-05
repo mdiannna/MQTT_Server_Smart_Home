@@ -7,6 +7,7 @@ from app.sensor_data import add_json_data, aggregate_sensor_data
 from sqlalchemy import desc
 import random
 from app.ml_predict import predict_health
+from datetime import datetime
 
 def transform_to_chart_data(data, type):
     unit = '-'
@@ -127,8 +128,9 @@ def post_health_state():
         # feeling trebuie sa fie 1, 2, 3 sau trebuie de convertit!!!!
         feeling = input_json["feeling"]
 
+        timestamp = datetime.now()
 
-        userData = UserData(user_id=1, feeling=feeling)
+        userData = UserData(user_id=1, feeling=feeling, timestamp=timestamp)
         db.session.add(userData)
         db.session.commit()
 
